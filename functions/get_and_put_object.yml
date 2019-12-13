@@ -1,0 +1,14 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://127.0.0.1:31112
+functions:
+  loadimage:
+    lang: python
+    handler: ./loadimage
+    image: naturlich/loadimage:latest
+    environment:
+      minio_hostname: "192.168.81.104:9000"
+      minio_access_key: "admin"
+      minio_secret_key: "qnap1234"
+      write_debug: true
