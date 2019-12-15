@@ -21,9 +21,11 @@ def from_s3(mc, bucketname, filename):
         return None
 
 def to_s3(mc, filecontent, bucketname, filename):
+    metadata = {"X-Amz-Meta-Hello": "World"}
+
     try:
         filecontent.seek(0)
-        mc.put_object(bucketname, filename, filecontent, len(filecontent.getvalue()))
+        mc.put_object(bucketname, filename, filecontent, len(filecontent.getvalue()), metadata=metadata)
     except ResponseError as err:
         print(err)
         raise ValueError("Failed to upload file to Minio")
