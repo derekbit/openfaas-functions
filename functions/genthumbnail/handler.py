@@ -43,7 +43,6 @@ def generate_thumbnail(filecontent, thumbsize):
 
 def handle(st):
     req = json.loads(st)
-    bucketname = "images"
 
     bucketname = req["bucket"]
     source = req["source"]
