@@ -37,7 +37,7 @@ def from_s3(mc, bucketname, filename):
         return None
 
 def to_s3(mc, filecontent, bucketname, filename, content_type, mtime):
-    metadata = {"X-Amz-Meta-File-Mtime": str(mtime)}
+    metadata = {"X-Amz-Meta-file-mtime": str(mtime)}
 
     try:
         filecontent.seek(0)
