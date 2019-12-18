@@ -9,11 +9,10 @@ PREFIX="/share/external/.cm/0/"
 FILEPATH="$1"
 
 FILEPATH_WO_PREFIX=${FILEPATH#$PREFIX};
-echo $FILEPATH_WO_PREFIX
 
 if [ ${FILEPATH_WO_PREFIX:0:1} = "/" ]; then
 	# Generate thumbnail locally
-	/usr/local/medialibrary/bin/photo_gen_thumbnail "$FILEPATH"
+	/usr/local/bin/photo_gen_thumbnail "$FILEPATH"
 else
 	UUID=`dirname $FILEPATH_WO_PREFIX`
 	FILENAME=`basename $FILEPATH_WO_PREFIX`
@@ -23,11 +22,10 @@ else
 
 	JSON="{\"bucket\": \"$BUCKET\",\"source\": \"$FILENAME\",\"destination\": \"$FILENAME\"}"
 
-
 	CACHE_STATE=`getfattr --absolute-names  --only-values -n trusted.cm.meta_status "$FILEPATH" | jq -r '.state'`
 	if [ x"$CACHE_STATE" = x"full-cached" ]; then
 		# Generate thumbnail locally
-		/usr/local/medialibrary/bin/photo_gen_thumbnail "$FILEPATH"
+		/usr/local/bin/photo_gen_thumbnail "$FILEPATH"
 	else
 		# Generate thumbnail remotely
 		curl ${FASS_SERVER}/function/genthumbnail -d "{\"bucket\": \"$BUCKET\",\"source\": \"$FILENAME\",\"destination\": \"$FILENAME\"}"
