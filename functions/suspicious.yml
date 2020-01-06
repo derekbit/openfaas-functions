@@ -1,0 +1,16 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://127.0.0.1:31112
+functions:
+  suspicious:
+    lang: python3-keras
+    handler: ./suspicious
+    image: naturlich/suspicious:latest
+    environment:
+      write_debug: true
+      minio_hostname: "192.168.81.104:9000"
+    secrets:
+    - minio-access-key
+    - minio-secret-key
+
